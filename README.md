@@ -25,7 +25,7 @@ Create a yml file
 ---
 folders:
   # Folder in which torrent files are download
-  # Example downloding my_movie.torrent in src_folder
+  # Example downloding my_file.torrent in src_folder
   src: ''  # Example: C:\Users\foo\Downloads
   # Folder in which the actual files will be downloaded
   # Example downloading my_move from ftp
