@@ -8,7 +8,7 @@ from torrent_manager.config import Config
 from torrent_manager.watcher import TorrentHandler
 
 from watchdog.observers import Observer
-from win10toast import ToastNotifier
+
 
 class DefaultParser(argparse.ArgumentParser):
     """ Print the helper on any error"""
@@ -34,8 +34,8 @@ def main():
     config = Config(args.config)
     conf = config.load()
 
-    toaster = ToastNotifier()
-    handler = TorrentHandler(conf, toaster)
+
+    handler = TorrentHandler(conf)
     observer = Observer()
     observer.schedule(handler, conf['folders']['src'])
     observer.start()

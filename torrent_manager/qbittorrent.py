@@ -19,15 +19,10 @@ class QBittorrent:
         )
 
     def add_torrent(self, path):
+        self.toaster.notif("Torrent-Manager", "%s is on seedbox" % (ntpath.basename(path)))
         self.client.torrents.add(torrent_files=path)
         import time
-        time.sleep(1)
-        self.toaster.show_toast(
-            "Torrent-Manager",
-            "%s is on seedbox" % (ntpath.basename(path)),
-            duration=5
-        )
-        time.sleep(2)
+
 
     def torrent_complete(self, name):
         for torrent in self.client.torrents.info.all():

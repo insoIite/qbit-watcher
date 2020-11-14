@@ -6,16 +6,17 @@ from threading import Thread
 
 from torrent_manager.qbittorrent import QBittorrent
 from torrent_manager.ftp import TorrentFTP
+from torrent_manager.toaster import TorrentToaster
 
 from watchdog.events import FileSystemEventHandler
 
 
 class TorrentHandler(FileSystemEventHandler):
-    def __init__(self, config, toaster):
+    def __init__(self, config):
         self.conf = config
         self.torrent_folder = config['folders']['src']
         self.dest_folder = config['folders']['dest']
-        self.toaster = toaster
+        self.toaster = TorrentToaster()
 
     def manage(self, torrent_filename, torrent_name):
 
