@@ -1,4 +1,4 @@
-# qbit-Watcher
+# qbit-watcher
 
 ## Introduction
 
@@ -50,7 +50,7 @@ ftp:
 
 ```
 git clone https://github.com/insoIite/qbit-watcher.git
-cd qbit-Watcher
+cd qbit-watcher
 pip3 install -r requirements.txt
 python setup.py sdist
 pip3 install dist\qbit_watcher-0.1.tar.gz
