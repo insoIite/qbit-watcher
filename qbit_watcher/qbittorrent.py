@@ -25,7 +25,7 @@ class QBittorrent:
         """
         Add torrent to qbittorrent through API
         """
-        self.toaster.notif("Torrent-Manager", "%s is on seedbox" % (ntpath.basename(path)))
+        self.toaster.notif("%s is on seedbox" % (ntpath.basename(path)))
         self.client.torrents.add(torrent_files=path)
         import time
 

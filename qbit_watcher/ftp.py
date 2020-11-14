@@ -29,11 +29,11 @@ class TorrentFTP:
             with open('%s/%s' % (self.dest, fname), 'wb') as fd_torrent:
                 self.ftp.retrbinary('RETR %s' % fname, fd_torrent.write)
                 print("FTP: ''%s' downloaded" % (fname))
-                self.toaster.notif("Torrent-Manager", "%s is downloaded" % (fname))
+                self.toaster.notif("%s is downloaded" % (fname))
         # this is a folder
         else:
             os.makedirs("%s/%s" % (self.dest, fname), exist_ok=True)
             for file in res:
                 with open('%s/%s' % (self.dest, file), 'wb') as fd:
                     self.ftp.retrbinary('RETR %s' % (file), fd.write)
-            self.toaster.notif("Torrent-Manager", "%s is downloaded" % (fname))
+            self.toaster.notif("%s is downloaded" % (fname))

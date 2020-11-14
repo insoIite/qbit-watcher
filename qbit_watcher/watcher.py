@@ -22,7 +22,7 @@ class TorrentHandler(FileSystemEventHandler):
         self.dest_folder = config['folders']['dest']
         if not os.path.exists(self.dest_folder):
             os.makedirs(self.dest_folder)
-        self.toaster = TorrentToaster()
+        self.toaster = TorrentToaster(config['toaster'])
 
     def manage(self, torrent_filename, torrent_name):
         """
