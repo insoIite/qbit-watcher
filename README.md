@@ -45,6 +45,11 @@ ftp:
   password: ""    # FTP password
   # Remote path on the FTP server
   remote_path: "" # Example: "/torrents/qbittorrent/"
+
+# Windows notification
+toaster:
+  duration: 5 # seconds
+  title: "qbit-watcher"
 ```
 
 ## Developer
