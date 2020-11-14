@@ -4,9 +4,9 @@ import time
 
 from threading import Thread
 
-from torrent_manager.qbittorrent import QBittorrent
-from torrent_manager.ftp import TorrentFTP
-from torrent_manager.toaster import TorrentToaster
+from qbit_watcher.qbittorrent import QBittorrent
+from qbit_watcher.ftp import TorrentFTP
+from qbit_watcher.toaster import TorrentToaster
 
 from watchdog.events import FileSystemEventHandler
 
@@ -20,8 +20,8 @@ class TorrentHandler(FileSystemEventHandler):
         self.conf = config
         self.torrent_folder = config['folders']['src']
         self.dest_folder = config['folders']['dest']
-        if not os.path.exists(self.dest):
-            os.makedirs(self.dest)
+        if not os.path.exists(self.dest_folder):
+            os.makedirs(self.dest_folder)
         self.toaster = TorrentToaster()
 
     def manage(self, torrent_filename, torrent_name):

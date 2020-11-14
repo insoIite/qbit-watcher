@@ -2,17 +2,22 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="torrent_manager",
+    name="qbit_watcher",
     version="0.1",
     packages=find_packages(),
     entry_points={
         "console_scripts": [
-            'torrent_manager=torrent_manager.main:main'
+            'qbit_watcher=qbit_watcher.main:main'
         ]
     },
-    install_requires=[],
+    install_requires=[
+        "pyyaml==5.1.2",
+        "qbittorrent-api==2020.10.11",
+        "watchdog==0.10.3",
+        "win10toast==0.9"
+    ],
     author="fdugast",
     description="Watch torrent folder, add torrent to qbitorrent, download it",
     keywords="torrent qbitorrent",
-    url="https://github.com/insoIite/torrent-manager"
+    url="https://github.com/insoIite/qbit-watcher"
 )

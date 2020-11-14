@@ -17,7 +17,6 @@ class TorrentFTP:
         ftp.connect(host=self.conf['domain'], port=self.conf['port'])
         ftp.login(self.conf['user'], self.conf['password'])
         ftp.cwd( self.conf['remote_path'])
-        print("FTP: Connected to %s" % host)
         return ftp
 
     def download(self, fname):

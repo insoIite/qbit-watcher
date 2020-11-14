@@ -4,8 +4,8 @@ Main entry point
 import argparse
 import time
 
-from torrent_manager.config import Config
-from torrent_manager.watcher import TorrentHandler
+from qbit_watcher.config import Config
+from qbit_watcher.watcher import TorrentHandler
 
 from watchdog.observers import Observer
 
