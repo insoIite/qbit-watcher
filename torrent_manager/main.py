@@ -35,18 +35,18 @@ def main():
     args = parser.parse_args()
     config = Config(args.config)
     conf = config.get_config()
-    client = QBittorrent(conf)
 
-    #handler = TorrentHandler(conf)
-    #observer = Observer()
-    #observer.schedule(handler, conf['local_folders']['torrent_folder'])
-    #observer.start()
-    #try:
-    #    while(True):
-    #        time.sleep(10)
-    #except KeyboardInterrupt:
-    #    observer.stop()
-    #observer.join()
+
+    handler = TorrentHandler(conf)
+    observer = Observer()
+    observer.schedule(handler, conf['local_folders']['torrent_folder'])
+    observer.start()
+    try:
+        while(True):
+            time.sleep(10)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
 
 
 if __name__ == "__main__":
