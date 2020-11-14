@@ -11,7 +11,9 @@ from watchdog.observers import Observer
 
 
 class DefaultParser(argparse.ArgumentParser):
-    """ Print the helper on any error"""
+    """
+     Print the helper on any error
+    """
     def error(self, message):
         sys.stderr.write('error: %s\n' % message)
         self.print_help()
@@ -29,11 +31,14 @@ def get_parser():
     return parser
 
 def main():
+    """
+    Main function of the program
+    """
     parser = get_parser()
     args = parser.parse_args()
+
     config = Config(args.config)
     conf = config.load()
-
 
     handler = TorrentHandler(conf)
     observer = Observer()
@@ -45,7 +50,3 @@ def main():
     except KeyboardInterrupt:
         observer.stop()
     observer.join()
-
-
-if __name__ == "__main__":
-    main()

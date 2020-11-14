@@ -10,20 +10,20 @@ class TorrentFTP:
         self.toaster = toaster
 
     def get_client(self):
+        """
+        Returns a ftp connection
+        """
         ftp = FTP()
-        user = self.conf['user']
-        passwd = self.conf['password']
-        port = self.conf['port']
-        host = self.conf['domain']
-        remote_path = self.conf['remote_path']
-
-        ftp.connect(host=host, port=port)
-        ftp.login(user, passwd)
-        ftp.cwd(remote_path)
+        ftp.connect(host=self.conf['domain'], port=self.conf['port'])
+        ftp.login(self.conf['user'], self.conf['password'])
+        ftp.cwd( self.conf['remote_path'])
         print("FTP: Connected to %s" % host)
         return ftp
 
     def download(self, fname):
+        """
+        Download a file or a folder from remote FTP
+        """
         res = self.ftp.nlst(fname)
         # This is a file
         if len(res) == 1:

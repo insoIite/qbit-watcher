@@ -11,6 +11,9 @@ class QBittorrent:
         self.toaster = toaster
 
     def get_client(self):
+        """
+        Returns a client to qbittorrent
+        """
         return Client(
             host=self.host,
             port=self.port,
@@ -19,12 +22,18 @@ class QBittorrent:
         )
 
     def add_torrent(self, path):
+        """
+        Add torrent to qbittorrent through API
+        """
         self.toaster.notif("Torrent-Manager", "%s is on seedbox" % (ntpath.basename(path)))
         self.client.torrents.add(torrent_files=path)
         import time
 
 
     def torrent_complete(self, name):
+        """
+        Returns boolean depending on torrent state in qbittorrent
+        """
         for torrent in self.client.torrents.info.all():
             if torrent.name != name:
                 continue
