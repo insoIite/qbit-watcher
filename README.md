@@ -28,7 +28,7 @@ folders:
   src: ''  # Example: C:\Users\foo\Downloads
   # Folder in which the actual files will be downloaded
   # Example downloading my_move from ftp
-  dest: '' # Example: 'E:\Series
+  dest: '' # Example: 'E:\My_files
 
 qbitorrent:
   scheme: https
