@@ -9,10 +9,17 @@ class Config:
 
     def get_config(self):
         return {
-            "url": self.config['seedbox']['url'],
-            "qbitorrent_path": self.config['seedbox']['qbitorrent_path'],
-            "user": self.config['seedbox']['user'],
-            "password": self.config['seedbox']['password']
+            "seedbox": {
+                "scheme": self.config['seedbox']['scheme'],
+                "domain": self.config['seedbox']['domain'],
+                "user": self.config['seedbox']['user'],
+                "password": self.config['seedbox']['password'],
+                "qbitorrent_port": self.config['seedbox']['qbitorrent_port']
+            },
+            "local_folders": {
+                "torrent_folder": self.config['local_folders']['torrent_folder'],
+                "dest_folder": self.config['local_folders']['dest_folder']
+            }
         }
 
 

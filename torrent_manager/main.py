@@ -2,8 +2,15 @@
 Main entry point
 """
 import argparse
+import time
 
 from torrent_manager.config import Config
+from torrent_manager.qbittorrent import QBittorrent
+from torrent_manager.watcher import TorrentHandler
+
+
+from watchdog.observers import Observer
+
 
 class DefaultParser(argparse.ArgumentParser):
     """ Print the helper on any error"""
@@ -27,7 +34,20 @@ def main():
     parser = get_parser()
     args = parser.parse_args()
     config = Config(args.config)
-    print(config.get_config())
+    conf = config.get_config()
+    client = QBittorrent(conf)
+
+    #handler = TorrentHandler(conf)
+    #observer = Observer()
+    #observer.schedule(handler, conf['local_folders']['torrent_folder'])
+    #observer.start()
+    #try:
+    #    while(True):
+    #        time.sleep(10)
+    #except KeyboardInterrupt:
+    #    observer.stop()
+    #observer.join()
+
 
 if __name__ == "__main__":
     main()
