@@ -5,12 +5,10 @@ import argparse
 import time
 
 from torrent_manager.config import Config
-from torrent_manager.qbittorrent import QBittorrent
 from torrent_manager.watcher import TorrentHandler
 
-
 from watchdog.observers import Observer
-
+from win10toast import ToastNotifier
 
 class DefaultParser(argparse.ArgumentParser):
     """ Print the helper on any error"""
@@ -34,12 +32,12 @@ def main():
     parser = get_parser()
     args = parser.parse_args()
     config = Config(args.config)
-    conf = config.get_config()
+    conf = config.load()
 
-
-    handler = TorrentHandler(conf)
+    toaster = ToastNotifier()
+    handler = TorrentHandler(conf, toaster)
     observer = Observer()
-    observer.schedule(handler, conf['local_folders']['torrent_folder'])
+    observer.schedule(handler, conf['folders']['src'])
     observer.start()
     try:
         while(True):

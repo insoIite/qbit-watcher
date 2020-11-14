@@ -2,34 +2,44 @@ import os
 import re
 import time
 
+from threading import Thread
+
 from torrent_manager.qbittorrent import QBittorrent
+from torrent_manager.ftp import TorrentFTP
 
 from watchdog.events import FileSystemEventHandler
 
+
 class TorrentHandler(FileSystemEventHandler):
-    def __init__(self, config):
+    def __init__(self, config, toaster):
         self.conf = config
-        self.torrent_folder = config['local_folders']['torrent_folder']
+        self.torrent_folder = config['folders']['src']
+        self.dest_folder = config['folders']['dest']
+        self.toaster = toaster
+
+    def manage(self, torrent_filename, torrent_name):
+
+        client = QBittorrent(self.conf['qbitorrent'], self.toaster)
+        client.add_torrent(torrent_filename);
+
+        # transform to subthread
+        while True:
+            time.sleep(1)
+            if client.torrent_complete(torrent_name):
+                break
+
+        ftpCli = TorrentFTP(self.conf['ftp'], self.dest_folder, self.toaster)
+        ftpCli.download(torrent_name)
+
 
     def on_modified(self, event):
-
         for filename in os.listdir(self.torrent_folder):
             if not filename.endswith(".torrent"):
                 continue
             src = '%s/%s' % (self.torrent_folder, filename)
-            t_name = re.sub('\.torrent$', '', filename)
             dest = '%s-processed' % (src)
-            client = QBittorrent(self.conf)
-            client.add_torrent(src);
             os.rename(src, dest)
-            # transform to subthread
-            while True:
-                time.sleep(1)
-                if client.torrent_complete(t_name):
-                    break
-            print("Download is complete")
-
-
-
-            # qbittorent wait_for_complete
-            # qbitorrent download on dest_folder
+            t_name = re.sub('\.torrent$', '', filename)
+            time.sleep(1)
+            t = Thread(target=self.manage, args=[dest, t_name])
+            t.start()
