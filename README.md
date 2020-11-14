@@ -7,7 +7,7 @@ It will:
 
 * Listen a source folder for new torrent file
 * Connect to qbitorrent and will add the torrent to it
-* Ensure the torrent as finished to downloads
+* Ensure the torrent has finished to downloads
 * Download the torrent using ftp
 * Notify user with toasts
 
@@ -28,7 +28,7 @@ folders:
   src: ''  # Example: C:\Users\foo\Downloads
   # Folder in which the actual files will be downloaded
   # Example downloading my_move from ftp
-  dest: '' # Example: 'E:\Series
+  dest: '' # Example: 'E:\My_files
 
 qbitorrent:
   scheme: https
