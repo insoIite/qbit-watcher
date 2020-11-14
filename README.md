@@ -20,7 +20,7 @@ It will:
 
 Create a yml file
 
-```
+```yml
 ---
 folders:
   # Folder in which torrent files are download
@@ -32,16 +32,16 @@ folders:
 
 qbitorrent:
   scheme: https
-  domain: "" # Example 'qbittorrent.mydomain'
-  user: "" # qbittorrent user
+  domain: ""   # Example 'qbittorrent.mydomain'
+  user: ""     # qbittorrent user
   password: "" # qbittorrent password
-  port: 8080 # qbitorrent port
+  port: 8080   # qbitorrent port
 
 ftp:
-  domain: "" # FTP hostname
-  port: 21 # FTP port
-  user: "" # FTP user
-  password: "" # FTP password
+  domain: ""      # FTP hostname
+  port: 21        # FTP port
+  user: ""        # FTP user
+  password: ""    # FTP password
   # Remote path on the FTP server
   remote_path: "" # Example: "/torrents/qbittorrent/"
 ```
