@@ -1,3 +1,5 @@
+import os
+
 from ftplib import FTP
 
 class TorrentFTP:
@@ -22,9 +24,23 @@ class TorrentFTP:
         return ftp
 
     def download(self, fname):
-        with open('%s/%s' % (self.dest, fname), 'wb') as fd_torrent:
-            self.ftp.retrbinary('RETR %s' % fname, fd_torrent.write)
-            print("FTP: ''%s' downloaded" % (fname))
+        res = self.ftp.nlst(fname)
+        # This is a file
+        if len(res) == 1:
+            with open('%s/%s' % (self.dest, fname), 'wb') as fd_torrent:
+                self.ftp.retrbinary('RETR %s' % fname, fd_torrent.write)
+                print("FTP: ''%s' downloaded" % (fname))
+                self.toaster.show_toast(
+                    "Torrent-Manager",
+                    "%s is downloaded" % (fname),
+                    duration=5
+                )
+        # this is a folder
+        else:
+            os.makedirs("%s/%s" % (self.dest, fname), exist_ok=True)
+            for file in res:
+                with open('%s/%s' % (self.dest, file), 'wb') as fd:
+                    self.ftp.retrbinary('RETR %s' % (file), fd.write)
             self.toaster.show_toast(
                 "Torrent-Manager",
                 "%s is downloaded" % (fname),
