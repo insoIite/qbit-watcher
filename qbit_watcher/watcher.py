@@ -1,3 +1,4 @@
+import logging
 import os
 import re
 import time
@@ -10,6 +11,7 @@ from qbit_watcher.toaster import TorrentToaster
 
 from watchdog.events import FileSystemEventHandler
 
+LOGGER = logging.getLogger(__name__)
 
 class TorrentHandler(FileSystemEventHandler):
     """
@@ -30,11 +32,12 @@ class TorrentHandler(FileSystemEventHandler):
         Ensure the torrent has finished to be downloaded
         Download the torrent on local dest folder from FTP
         """
+        LOGGER.info("new thread 'manage' for %s" % (torrent_filename))
         client = QBittorrent(self.conf['qbitorrent'], self.toaster)
         client.add_torrent(torrent_filename);
 
         while True:
-            time.sleep(1)
+            time.sleep(5)
             if client.torrent_complete(torrent_name):
                 break
 
@@ -49,6 +52,7 @@ class TorrentHandler(FileSystemEventHandler):
         for filename in os.listdir(self.torrent_folder):
             if not filename.endswith(".torrent"):
                 continue
+            LOGGER.info("New torrent %s detected" % (filename))
             src = '%s/%s' % (self.torrent_folder, filename)
             dest = '%s-processed' % (src)
             os.rename(src, dest)

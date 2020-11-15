@@ -1,7 +1,11 @@
 """
 Read config file
 """
+import logging
+
 import yaml
+
+LOGGER = logging.getLogger(__name__)
 
 class Config:
     def __init__(self, path):
@@ -13,6 +17,9 @@ class Config:
         """
         with open(self.path, 'r') as fd_config:
             try:
-                return yaml.safe_load(fd_config)
+                conf = yaml.safe_load(fd_config)
+                LOGGER.info("%s is loaded", self.path)
             except yaml.YAMLError as exc:
-                print(exc)
+                LOGGER.info(exc)
+                raise
+            return conf
