@@ -43,4 +43,5 @@ class TorrentFTP:
                 with open('%s/%s' % (self.dest, file), 'wb') as fd:
                     self.ftp.retrbinary('RETR %s' % (file), fd.write)
                     LOGGER.info("%s is downloaded", file)
+            LOGGER.info("%s is downloaded", fname)
             self.toaster.notif("%s is downloaded" % (fname))
