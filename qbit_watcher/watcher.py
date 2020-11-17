@@ -55,7 +55,7 @@ class TorrentHandler(FileSystemEventHandler):
             LOGGER.info("New torrent %s detected" % (filename))
             src = '%s/%s' % (self.torrent_folder, filename)
             dest = '%s-processed' % (src)
-            os.rename(src, dest)
+            os.replace(src, dest)
             t_name = re.sub('\.torrent$', '', filename)
             time.sleep(1)
             t = Thread(target=self.manage, args=[dest, t_name])

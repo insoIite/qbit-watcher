@@ -6,3 +6,4 @@ qbit-watcher.spec
 WindowsService.spec
 packaging/pyinstaller_hooks/*
 qbit-watcher-setup.exe
+qbit_watcher/__pycache__/*
