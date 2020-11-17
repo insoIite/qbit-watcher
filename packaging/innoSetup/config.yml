@@ -1,0 +1,31 @@
+---
+folders:
+  # Folder in which torrent files are download
+  # Example downloding my_file.torrent in src_folder
+  src: ''  # Example: C:\Users\foo\Downloads
+  # Folder in which the actual files will be downloaded
+  # Example downloading my_move from ftp
+  dest: '' # Example: 'E:\My_files
+
+qbitorrent:
+  scheme: https
+  domain: ""   # Example 'qbittorrent.mydomain'
+  user: ""     # qbittorrent user
+  password: "" # qbittorrent password
+  port: 8080   # qbitorrent port
+
+ftp:
+  domain: ""      # FTP hostname
+  port: 21        # FTP port
+  user: ""        # FTP user
+  password: ""    # FTP password
+  # Remote path on the FTP server
+  remote_path: "" # Example: "/torrents/qbittorrent/"
+
+# Windows notification
+toaster:
+  duration: 5 # seconds
+  title: "qbit-watcher"
+
+  log:
+    path: "" # Path to log file

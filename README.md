@@ -50,11 +50,16 @@ ftp:
 toaster:
   duration: 5 # seconds
   title: "qbit-watcher"
+
+  log:
+    path: "" # Path to log file
 ```
 
 ## Developer
 
-```
+### Build app in local
+
+```bash
 git clone https://github.com/insoIite/qbit-watcher.git
 cd qbit-watcher
 pip3 install -r requirements.txt
@@ -62,3 +67,14 @@ python setup.py sdist
 pip3 install dist\qbit_watcher-0.1.tar.gz
 qbit_watcher.exe --config "path_to_config_file\config.yml"
 ```
+
+### Package app for windower
+
+```bash
+ pyinstaller.exe .\qbit-watcher.py --hiddenimport win32timezone --additional-hooks-dir .\packaging\pyinstaller_hooks\
+# Results in dist/qbit-watcher/
+```
+
+Be careful, command might failed if you python is installed from windows store.
+
+### Create windows installer

@@ -1,2 +1,8 @@
 dist/*
+build/*
+__pycache__/*
 qbit_watcher.egg-info/*
+qbit-watcher.spec
+WindowsService.spec
+packaging/pyinstaller_hooks/*
+qbit-watcher-setup.exe

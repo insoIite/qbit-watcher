@@ -2,6 +2,7 @@
 Main entry point
 """
 import argparse
+import os
 import sys
 import time
 
@@ -28,6 +29,7 @@ def get_parser():
     parser = DefaultParser()
     parser.add_argument(
         '-c', '--config',
+        default=os.getenv("QBIT_WATCHER_CONF", ""),
         help="Configuration file path"
     )
     return parser
@@ -37,8 +39,7 @@ def main():
     Main function of the program
     """
     parser = get_parser()
-    args = parser.parse_args()
-
+    args, _ = parser.parse_known_args()
     config = Config(args.config)
     try:
         conf = config.load()
@@ -49,6 +50,7 @@ def main():
         logger = create_logger(conf['log'])
     else:
         logger = create_logger()
+
     handler = TorrentHandler(conf)
     observer = Observer()
     observer.schedule(handler, conf['folders']['src'])
