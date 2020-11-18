@@ -1,6 +1,9 @@
+import logging
 import time
 
 from win10toast import ToastNotifier
+
+LOGGER = logging.getLogger(__name__)
 
 class TorrentToaster:
     def __init__(self, conf):
@@ -12,10 +15,13 @@ class TorrentToaster:
         """
         Perform a win notification
         """
-        self.toaster.show_toast(
-            self.title,
-            msg,
-            duration=self.duration,
-            threaded=True
-        )
-        while self.toaster.notification_active(): time.sleep(0.1)
+        try:
+            self.toaster.show_toast(
+                self.title,
+                msg,
+                duration=self.duration,
+                threaded=True
+            )
+            while self.toaster.notification_active(): time.sleep(0.1)
+        except Exception as exn:
+            LOGGER.error(exn)

@@ -1,38 +1,38 @@
-import servicemanager
-import socket
+import os
+import logging
 import sys
-import win32event
-import win32service
-import win32serviceutil
-
-from multiprocessing import Process, freeze_support
 
 from qbit_watcher.main import main
 
-class WinService(win32serviceutil.ServiceFramework):
-    _svc_name_ = "qbit-watcher"
-    _svc_display_name_ = "Qbit watcher"
-    _svc_description_ = """Scan src folder and add torrent files to qbittorrent
-, wait for it to be complete, then download it in dest folder"""
+def create_emergency_logger():
+    """
+    Application will run without I/O available
+    We need to write in a emergency file if something goes wrong
+    Emergency file will be in APPDATA
+    """
+    logger = logging.getLogger()
+    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    log_file_path = "%s\qbit-watcher\emergency.log" % (os.getenv('APPDATA'))
 
-    def __init__(self, args):
-        super().__init__(*args)
+    if not os.path.exists(os.path.dirname(log_file_path)):
+        os.makedirs(os.path.dirname(log_file_path))
 
-    def SvcStop(self):
-        self.ReportServiceStatus(win32service.SERVICE_STOP_PENDING)
-        self.ReportServiceStatus(win32service.SERVICE_STOPPED)
+    file_handler = logging.handlers.RotatingFileHandler(
+        log_file_path,
+        maxBytes=(1048576*5),
+        backupCount=7
+    )
+    file_handler.setFormatter(formatter)
+    logger.addHandler(file_handler)
+    logger.setLevel(logging.INFO)
+    return logger
 
-    def SvcDoRun(self):
-        self.main()
-
-    def main(self):
-        main()
 
 if __name__ == '__main__':
-    freeze_support()
-    if len(sys.argv) == 1:
-        servicemanager.Initialize()
-        servicemanager.PrepareToHostSingle(WinService)
-        servicemanager.StartServiceCtrlDispatcher()
-    else:
-        win32serviceutil.HandleCommandLine(WinService)
+    try:
+        main()
+    # Catch all wanted worst case scenario
+    except Exception as exn:
+        logger = create_emergency_logger()
+        logger.error(exn)
+        sys.exit(1)
