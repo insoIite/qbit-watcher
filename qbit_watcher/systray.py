@@ -21,10 +21,10 @@ class QbitTray:
         self.icon = self.setup()
 
     def setup(self):
-        menu_options = (("Tail log file", None, QbitTray.open_log_file),)
+        menu_options = (("Open log file", None, QbitTray.open_log_file),)
         LOGGER.info(self.icon_path)
         icon = SysTrayIcon(
-            self.icon_path,
+            str(self.icon_path),
             "qbit-watcher",
              menu_options,
              on_quit=QbitTray.on_quit_callback
