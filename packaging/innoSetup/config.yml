@@ -26,6 +26,3 @@ ftp:
 toaster:
   duration: 5 # seconds
   title: "qbit-watcher"
-
-  log:
-    path: "" # Path to log file

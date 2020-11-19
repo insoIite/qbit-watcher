@@ -4,7 +4,6 @@ Main entry point
 import argparse
 import os
 import sys
-import time
 
 from qbit_watcher.config import Config
 from qbit_watcher.logger import create_logger
@@ -42,8 +41,8 @@ def main():
 
     parser = get_parser()
     args, _ = parser.parse_known_args()
-    config = Config(args.config)
 
+    config = Config(args.config)
     conf = config.load()
 
     systray = QbitTray()
@@ -52,6 +51,7 @@ def main():
     handler = TorrentHandler(conf)
     observer = Observer()
     observer.schedule(handler, conf['folders']['src'])
+
     observer.start()
     logger.info("Watcher started")
     systray.run(observer)

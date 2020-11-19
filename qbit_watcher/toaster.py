@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 import time
 
 from win10toast import ToastNotifier
@@ -15,11 +16,16 @@ class TorrentToaster:
         """
         Perform a win notification
         """
+        icon_path = Path().absolute() / "qbittorrent_toast.ico"
+        if not icon_path.is_file():
+            icon_path = None
+
         try:
             self.toaster.show_toast(
                 self.title,
                 msg,
                 duration=self.duration,
+                icon_path=icon_path,
                 threaded=True
             )
             while self.toaster.notification_active(): time.sleep(0.1)
