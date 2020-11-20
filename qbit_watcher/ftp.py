@@ -71,7 +71,7 @@ class TorrentFTP:
         file_split = file_to_download.split('/')
         # retrieve filename
         file_name = file_split[-1]
-        # remove
+        # remove file_name
         file_split.pop()
         file_path = '/'.join(file_split)
         return (file_path, file_name)

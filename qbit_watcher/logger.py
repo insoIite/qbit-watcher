@@ -7,6 +7,8 @@ import logging.handlers
 import os
 import sys
 
+from qbit_watcher.settings import APP_LOGFILE
+
 def create_logger():
     """
     Create a logger instance
@@ -19,14 +21,8 @@ def create_logger():
         stream_handler.setFormatter(formatter)
         logger.addHandler(stream_handler)
 
-    # No point to use configuration for this right now...
-    log_file_path = "%s\qbit-watcher\qbit-watcher.log" % (os.getenv('APPDATA'))
-
-    if not os.path.exists(os.path.dirname(log_file_path)):
-        os.makedirs(os.path.dirname(log_file_path))
-
     file_handler = logging.handlers.RotatingFileHandler(
-        log_file_path,
+        APP_LOGFILE,
         maxBytes=(1048576*5),
         backupCount=7
     )

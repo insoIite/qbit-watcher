@@ -8,20 +8,23 @@ import time
 from pathlib import Path
 from subprocess import check_call
 
+from qbit_watcher.settings import APP_LOGFILE, APP_README, APP_BARETAIL, NOTEPAD, APP_ICON_SYSTRAY
 from infi.systray import SysTrayIcon
 
 LOGGER = logging.getLogger(__name__)
 
 class QbitTray:
     def __init__(self):
-        self.icon_path = Path().absolute() / "qbittorrent_systray.ico"
+        self.icon_path = APP_ICON_SYSTRAY
         if not self.icon_path.is_file():
-            LOGGER.info("%s not found" % str(self.icon_path))
             self.icon_path = None
         self.icon = self.setup()
 
     def setup(self):
-        menu_options = (("Open log file", None, QbitTray.open_log_file),)
+        menu_options = (
+            ("Open log file", None, QbitTray.open_log_file),
+            ("Open README", None, QbitTray.open_readme),
+        )
         LOGGER.info(self.icon_path)
         icon = SysTrayIcon(
             str(self.icon_path),
@@ -47,14 +50,13 @@ class QbitTray:
 
     @staticmethod
     def open_log_file(systray):
-        baretail = Path().absolute() / "baretail.exe"
-        LOGGER.info(baretail)
-        cmd = [baretail, "%s\qbit-watcher\qbit-watcher.log" % (os.getenv('APPDATA'))]
+        cmd = [APP_BARETAIL, APP_LOGFILE]
         check_call(cmd)
 
     @staticmethod
-    def say_hello(systray):
-        LOGGER.info("Hello baby")
+    def open_readme(systray):
+        cmd = [NOTEPAD, APP_README]
+        check_call(cmd)
 
     @staticmethod
     def on_quit_callback(systray):
