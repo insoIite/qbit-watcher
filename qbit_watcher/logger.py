@@ -9,6 +9,8 @@ import sys
 
 from qbit_watcher.settings import APP_LOGFILE
 
+from pathlib import Path
+
 def create_logger():
     """
     Create a logger instance
@@ -20,6 +22,9 @@ def create_logger():
         stream_handler = logging.StreamHandler()
         stream_handler.setFormatter(formatter)
         logger.addHandler(stream_handler)
+
+    if not APP_LOGFILE.parent.exists():
+        Path.mkdir(APP_LOGFILE.parent, exist_ok=True)
 
     file_handler = logging.handlers.RotatingFileHandler(
         APP_LOGFILE,
