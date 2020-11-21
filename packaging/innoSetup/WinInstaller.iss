@@ -15,15 +15,17 @@ SolidCompression=yes
 OutputDir=..\..\
 OutputBaseFilename=qbit-watcher-setup
 ChangesEnvironment=yes
+PrivilegesRequired=lowest
 
 #include <idp.iss>
 
 [Files]
 Source: "..\..\dist\qbit-watcher\*"; DestDir: "{app}\qbit-watcher"; Flags: ignoreversion recursesubdirs
-Source: "config.yml"; DestDir: "{userappdata}\qbit-watcher";
+Source: "..\..\config.yml"; DestDir: "{app}\qbit-watcher";
 Source: "..\..\icon\*"; DestDir: "{app}\qbit-watcher\icon";
 Source: "..\..\README.md"; DestDir: "{app}\qbit-watcher";
 Source: "{tmp}\baretail.exe"; DestDir: "{app}\qbit-watcher" ; Flags: external; ExternalSize: 225280
+
 
 [Code]
 procedure InitializeWizard();
@@ -32,10 +34,9 @@ begin
     idpDownloadAfter(wpReady);
 end;
 
-[Registry]
-Root: HKCU; Subkey: "Environment"; ValueType:string; ValueName: "QBIT_WATCHER_CONF"; \
-    ValueData: "{userappdata}\qbit-watcher\config.yml"; Flags: preservestringtype uninsdeletevalue
+[Icons]
+Name: "{userstartup}\qbit-watcher.exe"; Filename: "{app}\qbit-watcher\qbit-watcher.exe"; WorkingDir: "{app}\qbit-watcher"
 
 [Run]
-Filename: "notepad"; Parameters: {userappdata}\qbit-watcher\config.yml; Description: "Edit configuration file";
-;Filename: {app}\qbit-watcher\qbit-watcher.exe ; Flags: runhidden
+Filename: "notepad"; Parameters: {app}\qbit-watcher\config.yml; Description: "Edit configuration file";
+Filename: {app}\qbit-watcher\qbit-watcher.exe ; Flags: runhidden nowait
