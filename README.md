@@ -5,7 +5,6 @@
 This program is here to automate torrents downloads
 
 It will:
-
 * Listen a source folder for new torrent file
 * Connect to qbitorrent and will add the torrent to it
 * Ensure the torrent has finished to downloads
@@ -15,66 +14,50 @@ It will:
 ## Requirements
 
 * Windows 10
-* Python 3
+* Python 3 (For developers only)
 
-## Configuration
+## Install dir
 
-Create a yml file
+The application will be installed with non admin rights.
 
-```yml
----
-folders:
-  # Folder in which torrent files are download
-  # Example downloding my_file.torrent in src_folder
-  src: ''  # Example: C:\Users\foo\Downloads
-  # Folder in which the actual files will be downloaded
-  # Example downloading my_move from ftp
-  dest: '' # Example: 'E:\My_files
+Files will be found in (replace %USER% by your username):
 
-qbitorrent:
-  scheme: https
-  domain: ""   # Example 'qbittorrent.mydomain'
-  user: ""     # qbittorrent user
-  password: "" # qbittorrent password
-  port: 8080   # qbitorrent port
+* C:\Users\%USER%\AppData\Local\Programs\qbit-watcher
+* C:\Users\%USER%\AppData\Roaming\qbit-watcher
 
-ftp:
-  domain: ""      # FTP hostname
-  port: 21        # FTP port
-  user: ""        # FTP user
-  password: ""    # FTP password
-  # Remote path on the FTP server
-  remote_path: "" # Example: "/torrents/qbittorrent/"
+## Developers
 
-# Windows notification
-toaster:
-  duration: 5 # seconds
-  title: "qbit-watcher"
-
-  log:
-    path: "" # Path to log file
-```
-
-## Developer
-
-### Build app in local
+### Build app in local without exe file
 
 ```bash
 git clone https://github.com/insoIite/qbit-watcher.git
 cd qbit-watcher
 pip3 install -r requirements.txt
 python setup.py sdist
-pip3 install dist\qbit_watcher-0.1.tar.gz
-qbit_watcher.exe --config "path_to_config_file\config.yml"
+pip3 install dist\qbit_watcher-X.tar.gz
+edit config.yml
+qbit_watcher.exe
 ```
 
-### Package app for windower
-
+### Build app in local with exe file
 ```bash
- pyinstaller.exe .\qbit-watcher.py --hiddenimport win32timezone --additional-hooks-dir .\packaging\pyinstaller_hooks\
-# Results in dist/qbit-watcher/
+git clone https://github.com/insoIite/qbit-watcher.git
+cd qbit-watcher
+pip3 install -r requirements.txt
+# -w generate an exe that will run in background
+# The systray will attach the background process
+pyinstaller.exe .\qbit-watcher.py --hiddenimport win32timezone --additional-hooks-dir .\packaging\pyinstaller_hooks\ -w
+edit config.yml
+dist\qbit-watcher\qbit_watcher.exe
 ```
 
-Be careful, command might failed if you python is installed from windows store.
+### InnoSetup
+More than InnoSetup installed, You will need `Inno Download Plugin` installed
 
-### Create windows installer
+The installer will:
+
+* Download baretail (~220ko), that is an open source tail log file reader app
+* Copy files in install directory
+* Run notepad on config.yml in order to setup configuration
+* Create shortcurt in Startup dir in order to run program at Startup
+* Run program
