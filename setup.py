@@ -14,7 +14,8 @@ setup(
         "pyyaml==5.1.2",
         "qbittorrent-api==2020.10.11",
         "watchdog==0.10.3",
-        "win10toast==0.9"
+        "win10toast==0.9",
+        "infi.systray==0.1.12"
     ],
     author="fdugast",
     description="Watch torrent folder, add torrent to qbitorrent, download it",
