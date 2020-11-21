@@ -29,12 +29,10 @@ class TorrentFTP:
         """
         remote_files = self.ftp.nlst(fname)
         # This is a file
+        LOGGER.info('Retrieving %s' % (fname))
         if len(remote_files) == 1:
-            LOGGER.info('Retrieving %s' % (fname))
             with open('%s/%s' % (self.dest, fname), 'wb') as fd_torrent:
                 self.ftp.retrbinary('RETR %s' % fname, fd_torrent.write)
-                LOGGER.info('%s is retrieved', fname)
-                self.toaster.notif("%s is downloaded" % (fname))
         # this is a folder
         else:
             LOGGER.info("Folder detected, let's download each file")
@@ -46,8 +44,8 @@ class TorrentFTP:
                 with open('%s/%s' % (abs_path, _fname), 'wb') as fd:
                     self.ftp.retrbinary('RETR %s' % (file_to_download), fd.write)
                     LOGGER.info("%s is downloaded", _fname)
-            LOGGER.info("%s is downloaded", fname)
-            self.toaster.notif("%s is downloaded" % (fname))
+        LOGGER.info('%s is retrieved', fname)
+        self.toaster.notif("%s is downloaded" % (fname))
 
     def get_files_recurse(self, file_path):
         """

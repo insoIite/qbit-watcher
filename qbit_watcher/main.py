@@ -7,31 +7,12 @@ import sys
 
 from qbit_watcher.config import Config
 from qbit_watcher.logger import create_logger
+from qbit_watcher.settings import APP_CONFIG_FILE
 from qbit_watcher.systray import QbitTray
 from qbit_watcher.watcher import TorrentHandler
 
 from watchdog.observers import Observer
 
-class DefaultParser(argparse.ArgumentParser):
-    """
-     Print the helper on any error
-    """
-    def error(self, message):
-        sys.stderr.write('error: %s\n' % message)
-        self.print_help()
-        sys.exit(2)
-
-def get_parser():
-    """
-    Create argument parser for entry point
-    """
-    parser = DefaultParser()
-    parser.add_argument(
-        '-c', '--config',
-        default=os.getenv("QBIT_WATCHER_CONF", ""),
-        help="Configuration file path"
-    )
-    return parser
 
 def main():
     """
@@ -39,10 +20,7 @@ def main():
     """
     logger = create_logger()
 
-    parser = get_parser()
-    args, _ = parser.parse_known_args()
-
-    config = Config(args.config)
+    config = Config(APP_CONFIG_FILE)
     conf = config.load()
 
     systray = QbitTray()

@@ -18,7 +18,6 @@ class Config:
         try:
             with open(self.path, 'r') as fd_config:
                 conf = yaml.safe_load(fd_config)
-                LOGGER.info("%s is loaded", self.path)
         except yaml.YAMLError as exc:
             LOGGER.error(exc)
             raise
