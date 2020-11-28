@@ -14,9 +14,20 @@ qbitorrent:
   password: "" # qbittorrent password
   port: 8080   # qbitorrent port
 
-ftp:
+# Either use ftp or sftp depending on your remote.
+# Only one of those 2 dict should be filles
+# If not, ftp will prevail
+ftp: {}
+  #domain: ""      # FTP hostname
+  #port: 21        # FTP port
+  #user: ""        # FTP user
+  #password: ""    # FTP password
+  # Remote path on the FTP server
+  #remote_path: "" # Example: "/torrents/qbittorrent/"
+
+sftp:
   domain: ""      # FTP hostname
-  port: 21        # FTP port
+  port: 22        # FTP port
   user: ""        # FTP user
   password: ""    # FTP password
   # Remote path on the FTP server

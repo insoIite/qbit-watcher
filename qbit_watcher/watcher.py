@@ -7,6 +7,7 @@ from threading import Thread
 
 from qbit_watcher.qbittorrent import QBittorrent
 from qbit_watcher.ftp import TorrentFTP
+from qbit_watcher.sftp import TorrentSftp
 from qbit_watcher.toaster import TorrentToaster
 
 from watchdog.events import FileSystemEventHandler
@@ -41,8 +42,15 @@ class TorrentHandler(FileSystemEventHandler):
             if client.torrent_complete(torrent_name):
                 break
 
-        ftpCli = TorrentFTP(self.conf['ftp'], self.dest_folder, self.toaster)
-        ftpCli.download(torrent_name)
+        if self.conf['ftp']:
+            LOGGER.info("Using FTP")
+            ftpCli = TorrentFTP(self.conf['ftp'], self.dest_folder, self.toaster)
+            ftpCli.download(torrent_name)
+        elif self.conf['sftp']:
+            LOGGER.info("Using SFTP")
+            sftpCli = TorrentSftp(self.conf['sftp'], self.dest_folder, self.toaster)
+            sftpCli.download(torrent_name)
+            sftpCli.close()
 
     def on_modified(self, event):
         """
