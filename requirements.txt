@@ -1,4 +1,5 @@
 pyyaml==5.1.2
+pysftp==0.2.9
 pyinstaller==4.0
 qbittorrent-api==2020.10.11
 watchdog==0.10.3

@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="qbit_watcher",
-    version="1.0.1",
+    version="1.1.0",
     packages=find_packages(),
     entry_points={
         "console_scripts": [
@@ -11,6 +11,7 @@ setup(
         ]
     },
     install_requires=[
+        "pysftp==0.2.9",
         "pyyaml==5.1.2",
         "qbittorrent-api==2020.10.11",
         "watchdog==0.10.3",
