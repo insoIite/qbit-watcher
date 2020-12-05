@@ -6,7 +6,7 @@ import os
 import time
 
 from pathlib import Path
-from subprocess import check_call, CalledProcessError
+from subprocess import Popen, CalledProcessError
 
 from qbit_watcher.settings import APP_LOGFILE, APP_README, APP_BARETAIL, NOTEPAD, APP_ICON_SYSTRAY
 from infi.systray import SysTrayIcon
@@ -51,20 +51,20 @@ class QbitTray:
     def open_log_file(systray):
         prg = APP_BARETAIL if APP_BARETAIL.exists() else NOTEPAD
         cmd = [prg, APP_LOGFILE]
-        _check_call(cmd)
+        _run(cmd)
 
     @staticmethod
     def open_readme(systray):
         cmd = [NOTEPAD, APP_README]
-        _check_call(cmd)
+        _run(cmd)
 
     @staticmethod
     def on_quit_callback(systray):
         systray.visible = False
 
-def _check_call(cmd):
+def _run(cmd):
     try:
-        check_call(cmd)
+        Popen(cmd)
     except CalledProcessError as cpe:
         LOGIN.error(cpe)
         raise
