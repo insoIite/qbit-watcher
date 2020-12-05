@@ -7,7 +7,7 @@ folders:
   # Example downloading my_move from ftp
   dest: '' # Example: 'E:\My_files
 
-qbitorrent:
+qbittorrent:
   scheme: https
   domain: ""   # Example 'qbittorrent.mydomain'
   user: ""     # qbittorrent user
