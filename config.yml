@@ -13,6 +13,7 @@ qbitorrent:
   user: ""     # qbittorrent user
   password: "" # qbittorrent password
   port: 8080   # qbitorrent port
+  clean_older_than: 7 # Clean torrents older than 7 days
 
 # Either use ftp or sftp depending on your remote.
 # Only one of those 2 dict should be filles
