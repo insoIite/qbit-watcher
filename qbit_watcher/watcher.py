@@ -19,13 +19,14 @@ class TorrentHandler(FileSystemEventHandler):
     Watcher class, Create a thread(manage) each time a new torrent is
     written on src folder
     """
-    def __init__(self, config):
+    def __init__(self, config, toaster):
         self.conf = config
         self.torrent_folder = config['folders']['src']
         self.dest_folder = config['folders']['dest']
+        
         if not os.path.exists(self.dest_folder):
             os.makedirs(self.dest_folder)
-        self.toaster = TorrentToaster(config['toaster'])
+        self.toaster = toaster
 
     def manage(self, torrent_filename, torrent_name):
         """
@@ -34,7 +35,7 @@ class TorrentHandler(FileSystemEventHandler):
         Download the torrent on local dest folder from FTP
         """
         LOGGER.info("new thread 'manage' for %s" % (torrent_filename))
-        client = QBittorrent(self.conf['qbitorrent'], self.toaster)
+        client = QBittorrent(self.conf['qbittorrent'], self.toaster)
         client.add_torrent(torrent_filename);
 
         while True:

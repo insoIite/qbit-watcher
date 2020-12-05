@@ -10,6 +10,7 @@ class QBittorrent:
         self.host='%s://%s' % (conf['scheme'], conf['domain'])
         self.port = conf['port']
         self.user = conf['user']
+        self.clean = conf['clean_older_than']
         self.password = conf['password']
         self.client = self.get_client()
         self.toaster = toaster
@@ -56,3 +57,20 @@ class QBittorrent:
                 LOGGER.info("%s is downloaded" % torrent.name)
                 return True
         return False
+
+    def get_torrents_info_added(self):
+        """
+        Retrieve all torrents info and return a dictionary
+        of hash: timestamp
+        """
+        torrents_added = {}
+        for torrent_info in self.client.torrents_info():
+            torrents_added[torrent_info['hash']] = torrent_info['added_on']
+        return torrents_added
+
+    def delete_torrents(self, torrents):
+        """
+        Remove torrents from qbittorrent
+        """
+        self.client.torrents_delete(delete_files=True, torrent_hashes=torrents)
+        LOGGER.info("Torrents older than %d days are removed", self.clean)
