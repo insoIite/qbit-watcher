@@ -2,6 +2,7 @@ import os
 import logging
 
 from ftplib import FTP
+from qbit_watcher.ftp_util import parse_file
 
 LOGGER = logging.getLogger(__name__)
 
@@ -38,7 +39,7 @@ class TorrentFTP:
             LOGGER.info("Folder detected, let's download each file")
             all_files = self.get_files_recurse(fname)
             for file_to_download in all_files:
-                fpath, _fname = TorrentFTP.parse_file(file_to_download)
+                fpath, _fname = parse_file(file_to_download)
                 abs_path = "%s/%s" % (self.dest, fpath)
                 os.makedirs(abs_path, exist_ok=True)
                 with open('%s/%s' % (abs_path, _fname), 'wb') as fd:
@@ -62,14 +63,3 @@ class TorrentFTP:
             for remote in remotes:
                 res += self.get_files_recurse(remote)
         return res
-
-    @staticmethod
-    def parse_file(file_to_download):
-        # file_to_download = "folder1/folder2/myfile.ext"
-        file_split = file_to_download.split('/')
-        # retrieve filename
-        file_name = file_split[-1]
-        # remove file_name
-        file_split.pop()
-        file_path = '/'.join(file_split)
-        return (file_path, file_name)
