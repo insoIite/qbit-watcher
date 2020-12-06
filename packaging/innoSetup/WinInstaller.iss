@@ -4,7 +4,7 @@
 
 [Setup]
 AppName=qbit-watcher
-AppVersion=1.2.0
+AppVersion=1.2.1
 WizardStyle=modern
 DefaultDirName={autopf}\qbit-watcher
 Uninstallable=yes
