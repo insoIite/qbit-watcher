@@ -23,7 +23,7 @@ class TorrentHandler(FileSystemEventHandler):
         self.conf = config
         self.torrent_folder = config['folders']['src']
         self.dest_folder = config['folders']['dest']
-        
+
         if not os.path.exists(self.dest_folder):
             os.makedirs(self.dest_folder)
         self.toaster = toaster
@@ -64,8 +64,8 @@ class TorrentHandler(FileSystemEventHandler):
             LOGGER.info("New torrent %s detected" % (filename))
             src = '%s/%s' % (self.torrent_folder, filename)
             dest = '%s-processed' % (src)
-            os.replace(src, dest)
             t_name = re.sub('\.torrent$', '', filename)
-            time.sleep(1)
             t = Thread(target=self.manage, args=[dest, t_name])
             t.start()
+            time.sleep(1)
+            os.replace(src, dest)
