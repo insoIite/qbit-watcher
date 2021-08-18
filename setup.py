@@ -12,7 +12,7 @@ setup(
     },
     install_requires=[
         "pysftp==0.2.9",
-        "pyyaml==5.1.2",
+        "pyyaml==5.4.1",
         "qbittorrent-api==2020.10.11",
         "watchdog==0.10.3",
         "win10toast==0.9",

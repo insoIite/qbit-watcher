@@ -1,7 +1,7 @@
 import os
 import logging
 
-from ftplib import FTP
+from ftplib import FTP_TLS, FTP
 from qbit_watcher.ftp_util import parse_file
 
 LOGGER = logging.getLogger(__name__)
@@ -17,9 +17,17 @@ class TorrentFTP:
         """
         Returns a ftp connection
         """
-        ftp = FTP()
+        if self.conf['tls']:
+            ftp = FTP_TLS()
+        else:
+            ftp = FTP()
+
         ftp.connect(host=self.conf['domain'], port=self.conf['port'])
         ftp.login(self.conf['user'], self.conf['password'])
+
+        if self.conf['tls']:
+            ftp.prot_p()
+
         ftp.cwd( self.conf['remote_path'])
         LOGGER.info("Successfully connected to '%s' FTP server" % (self.conf['domain']))
         return ftp
