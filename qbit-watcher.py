@@ -1,7 +1,9 @@
 import os
 import logging
+import logging.handlers
 import sys
 
+from qbit_watcher import MainError
 from qbit_watcher.main import main
 
 
@@ -33,7 +35,7 @@ if __name__ == '__main__':
     try:
         main()
     # Catch all wanted worst case scenario
-    except Exception as exn:
+    except (MainError, Exception) as exn:
         logger = create_emergency_logger()
         logger.error(exn)
         sys.exit(1)

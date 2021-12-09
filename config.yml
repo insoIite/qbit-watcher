@@ -1,41 +1,34 @@
 ---
 folders:
   # Folder in which torrent files are download
-  # Example downloding my_file.torrent in src_folder
-  src: ""  # Example: C:\Users\foo\Downloads
+  # Example downloding my_movie.torrent in src_folder
+  src: "c:\should_exists"
   # Folder in which the actual files will be downloaded
   # Example downloading my_move from ftp
-  dest: '' # Example: 'E:\My_files
+  dest: "c:\should_exists"
 
 qbittorrent:
   scheme: https
-  domain: ""   # Example 'qbittorrent.mydomain'
-  user: ""     # qbittorrent user
-  password: "" # qbittorrent password
-  port: 8080   # qbitorrent port
-  clean_older_than: 7 # Clean torrents older than 7 days
+  domain: "my_domain.com"
+  user: "userA"
+  password: "Apasswd"
+  port: 10412
+  clean_older_than: 7
 
-# Either use ftp or sftp depending on your remote.
-# Only one of those 2 dict should be filles
-# If not, ftp will prevail
-ftp: {}
-  #domain: ""      # FTP hostname
-  #port: 21        # FTP port
-  #user: ""        # FTP user
-  #password: ""    # FTP password
-  #tls: true
-  # Remote path on the FTP server
-  #remote_path: "" # Example: "/torrents/qbittorrent/"
+ftp:
+  domain: "my_domain.com"
+  port: 21
+  user: "userA"
+  password: "Apasswd"
+  tls: True,
+  remote_path: "/torrents/qbittorrent/"
+#sftp:
+#  domain: "my_domain.com"
+#  port: 22
+#  user: "userA"
+#  password: "Apasswd"
+#  remote_path: "torrents/qbittorrent/"
 
-sftp:
-  domain: ""      # FTP hostname
-  port: 22        # FTP port
-  user: ""        # FTP user
-  password: ""    # FTP password
-  # Remote path on the FTP server
-  remote_path: "" # Example: "/torrents/qbittorrent/"
-
-# Windows notification
 toaster:
   duration: 5 # seconds
   title: "qbit-watcher"

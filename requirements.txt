@@ -7,3 +7,4 @@ win10toast>=0.9
 infi.systray>=0.1.12
 colorlog>=6.6.0
 python-json-logger>=2.0.2
+pyinstaller>=4.7

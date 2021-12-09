@@ -1,11 +1,17 @@
 """
 Read config file
 """
+from pathlib import Path
 from qbit_watcher.logger import get_logger
 
 import yaml
 
 LOGGER = get_logger(__name__)
+
+
+class ConfigError(Exception):
+    """ Config Error
+    """
 
 
 class Config:
@@ -26,3 +32,14 @@ class Config:
             LOGGER.error(fnfe)
             raise
         return conf
+
+    def validate(self):
+        """ Validate config file
+        """
+        conf = self.load()
+        if not Path(conf['folders']['src']).exists():
+            LOGGER.error("Source folder does not exists: %s", conf['folders']['src'])
+            raise ConfigError
+        if not Path(conf['folders']['dest']).exists():
+            LOGGER.error("Dest folder does not exists: %s", conf['folders']['dest'])
+            raise ConfigError

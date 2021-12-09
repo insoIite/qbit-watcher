@@ -1,14 +1,20 @@
 import ntpath
 
 from qbit_watcher.logger import get_logger
-from qbittorrentapi import Client, TorrentStates, exceptions
+from qbittorrentapi import Client, exceptions
 
 LOGGER = get_logger(__name__)
 
 
+class QbitError(Exception):
+    """
+    QbitError
+    """
+
+
 class QBittorrent:
     def __init__(self, conf, toaster):
-        self.host='%s://%s' % (conf['scheme'], conf['domain'])
+        self.host = '%s://%s' % (conf['scheme'], conf['domain'])
         self.port = conf['port']
         self.user = conf['user']
         self.clean = conf['clean_older_than']
@@ -31,10 +37,13 @@ class QBittorrent:
             LOGGER.info("Successfully connected to qbittorrent")
         except exceptions.LoginFailed as login_exn:
             LOGGER.error("Failed to login to qbittorrent")
-            raise
+            raise QbitError
         except exceptions.Forbidden403Error as forbid_exn:
-            LOGGER.error(forbid_exn)
-            raise
+            LOGGER.error("403 error on qbittorrent")
+            raise QbitError
+        except exceptions.APIConnectionError:
+            LOGGER.error("Failed to connect to Qbittorrent")
+            raise QbitError
         return client
 
     def add_torrent(self, path):
