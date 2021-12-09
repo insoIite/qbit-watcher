@@ -2,7 +2,7 @@
 folders:
   # Folder in which torrent files are download
   # Example downloding my_file.torrent in src_folder
-  src: ''  # Example: C:\Users\foo\Downloads
+  src: ""  # Example: C:\Users\foo\Downloads
   # Folder in which the actual files will be downloaded
   # Example downloading my_move from ftp
   dest: '' # Example: 'E:\My_files
@@ -23,7 +23,7 @@ ftp: {}
   #port: 21        # FTP port
   #user: ""        # FTP user
   #password: ""    # FTP password
-  tls: True
+  #tls: true
   # Remote path on the FTP server
   #remote_path: "" # Example: "/torrents/qbittorrent/"
 

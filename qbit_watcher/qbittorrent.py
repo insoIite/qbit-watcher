@@ -1,9 +1,10 @@
-import logging
 import ntpath
 
+from qbit_watcher.logger import get_logger
 from qbittorrentapi import Client, TorrentStates, exceptions
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
+
 
 class QBittorrent:
     def __init__(self, conf, toaster):

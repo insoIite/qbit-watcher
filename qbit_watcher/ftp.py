@@ -1,10 +1,12 @@
 import os
-import logging
+
 
 from ftplib import FTP_TLS, FTP
+from qbit_watcher.logger import get_logger
 from qbit_watcher.ftp_util import parse_file
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
+
 
 class TorrentFTP:
     def __init__(self, conf, dest_folder, toaster):
@@ -30,6 +32,7 @@ class TorrentFTP:
 
         ftp.cwd( self.conf['remote_path'])
         LOGGER.info("Successfully connected to '%s' FTP server" % (self.conf['domain']))
+        ftp.encoding = 'utf-8'
         return ftp
 
     def download(self, fname):

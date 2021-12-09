@@ -2,19 +2,17 @@
 Manage a systray (icon in taskbar) for windows
 """
 import logging
-import os
 import time
 
-from functools import partial
-from pathlib import Path
 from subprocess import Popen, CalledProcessError
 
+from qbit_watcher.logger import get_logger
 from qbit_watcher.qbittorrent import QBittorrent
 from qbit_watcher.settings import APP_LOGFILE, APP_README, APP_BARETAIL, NOTEPAD, APP_ICON_SYSTRAY
 
 from infi.systray import SysTrayIcon
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
 
 class QbitTray:
     def __init__(self, conf, toaster):
@@ -88,6 +86,7 @@ class QbitTray:
             if not timestamp > int(time.time()) - timing * 86400:
                 res[hash] = timestamp
         return res
+
 
 def _run(cmd):
     try:

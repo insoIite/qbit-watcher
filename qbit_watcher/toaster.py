@@ -1,12 +1,16 @@
-import logging
-from pathlib import Path
+"""
+Toaster class (windows notifications)
+"""
+
 import time
 
+from qbit_watcher.logger import get_logger
 from qbit_watcher.settings import APP_ICON_TOAST
 
 from win10toast import ToastNotifier
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
+
 
 class TorrentToaster:
     def __init__(self, conf):

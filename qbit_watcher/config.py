@@ -1,11 +1,12 @@
 """
 Read config file
 """
-import logging
+from qbit_watcher.logger import get_logger
 
 import yaml
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
+
 
 class Config:
     def __init__(self, path):

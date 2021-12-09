@@ -1,18 +1,18 @@
-import logging
 import os
 import re
 import time
 
 from threading import Thread
 
+from qbit_watcher.logger import get_logger
 from qbit_watcher.qbittorrent import QBittorrent
 from qbit_watcher.ftp import TorrentFTP
 from qbit_watcher.sftp import TorrentSftp
-from qbit_watcher.toaster import TorrentToaster
 
 from watchdog.events import FileSystemEventHandler
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
+
 
 class TorrentHandler(FileSystemEventHandler):
     """

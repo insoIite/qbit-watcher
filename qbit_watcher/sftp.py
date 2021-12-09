@@ -1,14 +1,15 @@
-import logging
+
 import os
 import shutil
 
 from pathlib import Path
+from qbit_watcher.logger import get_logger
 from qbit_watcher.ftp_util import parse_file, get_size_format
 
 from pysftp import Connection, CnOpts
 
 
-LOGGER = logging.getLogger(__name__)
+LOGGER = get_logger(__name__)
 
 
 class SftpGetProgress:
@@ -28,13 +29,13 @@ class SftpGetProgress:
             LOGGER.info("{}% ({} / {} {})".format(str("%d" % (100*(int(x)/int(y)))), int(current), int(total), fsize))
             self.dict_pgr[str(int(100*(int(x)/int(y))))] = "1"
 
+
 class TorrentSftp:
     def __init__(self, conf, dest_folder, toaster):
         self.conf = conf
         self.dest = dest_folder
         self.sftp = self.get_client()
         self.toaster = toaster
-
 
     def get_client(self):
         cnopts = CnOpts()

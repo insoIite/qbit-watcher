@@ -11,12 +11,14 @@ setup(
         ]
     },
     install_requires=[
-        "pysftp==0.2.9",
-        "pyyaml==5.4.1",
-        "qbittorrent-api==2020.10.11",
-        "watchdog==0.10.3",
-        "win10toast==0.9",
-        "infi.systray==0.1.12"
+        "pysftp>=0.2.9",
+        "pyyaml>=5.4.1",
+        "qbittorrent-api>=2020.10.11",
+        "watchdog>=0.10.3",
+        "win10toast>=0.9",
+        "infi.systray>=0.1.12",
+        "colorlog>=6.6.0",
+        "python-json-logger>=2.0.2"
     ],
     author="fdugast",
     description="Watch torrent folder, add torrent to qbitorrent, download it",

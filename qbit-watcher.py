@@ -4,6 +4,7 @@ import sys
 
 from qbit_watcher.main import main
 
+
 def create_emergency_logger():
     """
     Application will run without I/O available
