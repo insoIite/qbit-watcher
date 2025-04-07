@@ -44,6 +44,7 @@ class TorrentSftp:
             self.conf['domain'],
             username=self.conf['user'],
             password=self.conf['password'],
+            port=self.conf["port"],
             cnopts=cnopts,
             default_path=self.conf['remote_path']
         )

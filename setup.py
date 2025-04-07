@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="qbit_watcher",
-    version="1.3.0",
+    version="1.5.0",
     packages=find_packages(),
     entry_points={
         "console_scripts": [
