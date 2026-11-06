@@ -40,26 +40,24 @@ def __init_main_logger():
     logger = logging.getLogger('qbit_watcher')
     logger.setLevel(logging.INFO)
 
-    if sys.stdout.isatty() and sys.stderr.isatty():
-        stream_handler = __create_stream_handler()
-        logger.addHandler(stream_handler)
+    # RotatingFileHandler is a subclass of StreamHandler, so check it first
+    # and look for a "pure" StreamHandler explicitly.
+    if not __has_handler(logger.handlers, logging.FileHandler):
+        logger.addHandler(__create_file_handler())
 
-    if logger.handlers:
-        if not __has_handler(logger.handlers, logging.StreamHandler):
-            if sys.stdout.isatty() and sys.stderr.isatty():
-                handler = __create_stream_handler()
-                logger.addHandler(handler)
-        if not __has_handler(logger.handlers, logging.FileHandler):
-            handler = __create_file_handler()
-            logger.addHandler(handler)
-    else:
-        if sys.stdout.isatty() and sys.stderr.isatty():
-            handler = __create_stream_handler()
-            logger.addHandler(handler)
-        fhandler = __create_file_handler()
-        logger.addHandler(fhandler)
+    has_console = any(
+        type(h) is logging.StreamHandler for h in logger.handlers  # pylint: disable=unidiomatic-typecheck
+    )
+    if not has_console and __is_tty(sys.stdout) and __is_tty(sys.stderr):
+        logger.addHandler(__create_stream_handler())
     return logger
 
+def __is_tty(stream):
+    """
+    Return True if stream is an interactive terminal.
+    With PyInstaller >= 5.7 in windowed mode (-w), sys.stdout/stderr are None.
+    """
+    return stream is not None and hasattr(stream, 'isatty') and stream.isatty()
 
 def __valid_opts(opts):
     """
